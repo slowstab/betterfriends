@@ -10,6 +10,13 @@ const FRIENDLY_STATEMENT = {
   idle: 'went idle'
 }
 
+const STATUS_COLOR = {
+  online: '#43b581',
+  offline: '#747f8d',
+  dnd: '#f04747',
+  idle: '#faa61a'
+}
+
 /*
  * [ Status Popup ]
  * Listens for status changes from favorited friends, stores them and displays a little notification.
@@ -19,26 +26,25 @@ module.exports = async function () {
   if (!this.settings.get('statuspopup', true)) return;
   const Avatar = await getModule(m => m && m.Sizes && typeof m === 'function' && m.Sizes['SIZE_32'] === 'SIZE_32');
   this.createFriendPopup = (user, status) => {
-    powercord.api.notices.sendToast(`bf-friend-notification-${Math.random() * 100}`, {
-      icon: false,
-      className: 'bf-status-popup',
-      hideProgressBar: true,
-      header: `Friend ${FRIENDLY_STATEMENT[status]}`,
-      content: React.createElement(StatusHandler, {
-        status,
-        user,
-        Avatar
-      }),
-      timeout: 5000,
-      style: {
-        bottom: '25px',
-        right: '25px',
-        height: 'auto',
-        display: 'block',
-        padding: '12px'
-      },
-      buttons: []
-    });
+
+    const timeout = this.settings.wpmTimeout ? Math.min(this.calculateTime(notif.title) + this.calculateTime(notif.content), 60000) : 0;
+    const notificationId = XenoLib.Notifications.show(
+    React.createElement(
+        'div',
+        {
+        className: 'BF-message'
+        },
+        React.createElement(StatusHandler, {
+          status,
+          user,
+          Avatar
+        }),
+    ),
+    {
+        timeout: Math.max(5000, timeout),
+        color: STATUS_COLOR[status]
+    }
+    );
   }
 
   const { getStatus } = await getModule([ 'getStatus' ]);
