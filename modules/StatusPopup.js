@@ -29,7 +29,7 @@ module.exports = async function () {
   this.createFriendPopup = (user, status) => {
 
     const timeout = this.settings.wpmTimeout ? Math.min(this.calculateTime(notif.title) + this.calculateTime(notif.content), 60000) : 0;
-    const notificationId = XenoLib.Notifications.show(
+    const notificationId = global.XenoLib.Notifications.show(
     React.createElement(
         'div',
         {
