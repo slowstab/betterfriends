@@ -2,6 +2,7 @@ const { inject } = require('powercord/injector');
 const { React, getModule } = require('powercord/webpack');
 const { waitFor, getOwnerInstance } = require('powercord/util');
 const { StatusHandler } = require('./../components');
+const { XenoLib } = global;
 
 const FRIENDLY_STATEMENT = {
   online: 'went online',
