@@ -1,3 +1,4 @@
+/*eslint-disable*/
 const { inject } = require('powercord/injector');
 const { React, getModule } = require('powercord/webpack');
 const { waitFor, getOwnerInstance } = require('powercord/util');
@@ -45,8 +46,10 @@ module.exports = async function () {
         color: STATUS_COLOR[status]
       }
     );
+    
+    if (!this.settings.get('osNotif', true)) return;
+    new Notification(`${user.username} ${FRIENDLY_STATEMENT[status]}.`, {icon:user.avatarURL})
   };
-
   const { getStatus } = await getModule([ 'getStatus' ]);
   const getUser = await getModule([ 'getUser', 'getCurrentUser' ]);
 

@@ -37,11 +37,11 @@ module.exports = class Settings extends React.Component {
     if (!this.state.VerticalScroller) {
       return null;
     }
-    const { VerticalScroller, Flex, Text, PopoutList, playSound, getUser, getRelationships } = this.state;
-    const PopoutListSearchBar = PopoutList.prototype.constructor.SearchBar;
-    const PopoutListDivider = PopoutList.prototype.constructor.Divider;
+    const { VerticalScroller, Flex, Text, PopoutList: div, playSound, getUser, getRelationships } = this.state;
+    const PopoutListSearchBar = div.prototype.constructor.SearchBar;
+    const PopoutListDivider = div.prototype.constructor.Divider;
     const FlexChild = Flex.prototype.constructor.Child;
-    const SelectableItem = PopoutList.prototype.constructor.Item;
+    const SelectableItem = div.prototype.constructor.Item;
 
     const relationships = getRelationships();
     const friends = Object.keys(relationships).filter(relation => relationships[relation] === 1);
@@ -53,7 +53,7 @@ module.exports = class Settings extends React.Component {
         <div className='description-3_Ncsb formText-3fs7AJ marginBottom20-32qID7 modeDefault-3a2Ph1 primary-jw0I4K'>
           You can add or remove favorited friends from your friends list here.
         </div>
-        <PopoutList
+        <div
           className='bf-user-settings guildSettingsAuditLogsUserFilterPopout-3Jg5NE pc-guildSettingsAuditLogsUserFilterPopout elevationBorderHigh-2WYJ09 pc-elevationBorderHigh'
           popoutKey='bf-users'
         >
@@ -67,6 +67,7 @@ module.exports = class Settings extends React.Component {
           <PopoutListDivider/>
           <VerticalScroller
             className='scroller-2CvAgC pc-scroller'
+            style={{maxHeight:500}}
           >
             {friends
               .map(getUser)
@@ -109,7 +110,7 @@ module.exports = class Settings extends React.Component {
               })
             }
           </VerticalScroller>
-        </PopoutList>
+        </div>
 
 
         <SwitchItem
@@ -143,6 +144,17 @@ module.exports = class Settings extends React.Component {
           }}
         >
           Show status notifications
+        </SwitchItem>
+
+        <SwitchItem
+          note='Recieve OS notificaions'
+          value={this.state.osNotif}
+          onChange={() => {
+            this._set('osNotif');
+            this.plugin.reload();
+          }}
+        >
+          Show OS Notificaions
         </SwitchItem>
 
         <h5 className='h5-18_1nd title-3sZWYQ size12-3R0845 height16-2Lv3qA weightSemiBold-NJexzi marginBottom8-AtZOdT marginTop40-i-78cZ'>
