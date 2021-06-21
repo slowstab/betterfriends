@@ -1,8 +1,5 @@
-# Better Friends, shitty XenoLib Edition
-Uses XenoLib Notifs, instead of powercord toasts. Must have [XenoLib](https://github.com/1Lighty/BetterDiscordPlugins/blob/master/Plugins/1XenoLib.plugin.js) and [bdCompat](https://github.com/Juby210/bdCompat).
-
-# Better Friends
-Powercord plugin that aims to improve Discord's friend feature
+# Better Friends, XenoLib Edition
+Powercord plugin that aims to improve Discord's friend feature. Uses XenoLib Notifs, instead of powercord toasts. Must have [XenoLib](https://github.com/1Lighty/BetterDiscordPlugins/blob/master/Plugins/1XenoLib.plugin.js) and [bdCompat](https://github.com/Juby210/bdCompat).
 
 ## Installation
 Provided you have installed and injected Powercord correctly (see [here](https://github.com/powercord-org/powercord/wiki/Installation) for instructions)

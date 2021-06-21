@@ -3,26 +3,25 @@ const { uninject } = require('powercord/injector');
 const Settings = require('./Settings');
 const { InjectionIDs } = require('./Constants');
 
-
 module.exports = class BetterFriends extends Plugin {
   /**
    * Start the plugin
    */
-  async startPlugin () {
+  async startPlugin() {
     // Default settings handler
     this.DEFAULT_SETTINGS = {
       favfriends: [],
       notifsounds: {},
       infomodal: true,
       displaystar: true,
-      statuspopup: true
+      statuspopup: true,
     };
 
     // Register settings menu for BetterFriends
     powercord.api.settings.registerSettings('betterfriends', {
       category: this.entityID,
       label: 'Better Friends',
-      render: Settings
+      render: Settings,
     });
     // Handle CSS
     this.loadStylesheet('style.scss');
@@ -30,20 +29,23 @@ module.exports = class BetterFriends extends Plugin {
     // Constants
     this.FRIEND_DATA = {
       statusStorage: {},
-      lastMessageID: {}
+      lastMessageID: {},
     };
 
     await this.start();
   }
 
-  async start () {
+  async start() {
     this.instances = {};
     this.FAV_FRIENDS = this.settings.get('favfriends');
     if (!this.FAV_FRIENDS) {
       this.FAV_FRIENDS = [];
       for (const setting of Object.keys(this.DEFAULT_SETTINGS)) {
-        if (this.DEFAULT_SETTINGS[setting] === undefined && !this.FAV_FRIENDS) { /* eslint-disable-line */ /* I know this is bad practice, hopefully I'll find a better solution soon */
-          this.settings.set(this.settings.get(setting, this.DEFAULT_SETTINGS[setting]));
+        if (this.DEFAULT_SETTINGS[setting] === undefined && !this.FAV_FRIENDS) {
+          /* eslint-disable-line */ /* I know this is bad practice, hopefully I'll find a better solution soon */
+          this.settings.set(
+            this.settings.get(setting, this.DEFAULT_SETTINGS[setting])
+          );
         }
       }
     }
@@ -76,7 +78,7 @@ module.exports = class BetterFriends extends Plugin {
    * When no module is specified, all modules are loaded by default.
    * @param {String} specific Pass a specific module name to load only that module
    */
-  load (specific) {
+  load(specific) {
     if (specific) {
       this.MODULES[specific]();
     } else {
@@ -91,7 +93,7 @@ module.exports = class BetterFriends extends Plugin {
    * When no module is specified, the entire plugin is unloaded from Powercord.
    * @param {String} specific Pass a specific module name to unload only that module
    */
-  unload (specific) {
+  unload(specific) {
     if (specific) {
       for (const injection of InjectionIDs[specific]) {
         uninject(injection);
@@ -99,14 +101,14 @@ module.exports = class BetterFriends extends Plugin {
     } else {
       this.log('Plugin stopped');
       for (const unload of Object.keys(this.MODULES)) {
-        for (const injection of (InjectionIDs[unload] || [])) {
+        for (const injection of InjectionIDs[unload] || []) {
           uninject(injection);
         }
       }
     }
   }
 
-  pluginWillUnload () {
+  pluginWillUnload() {
     powercord.api.settings.unregisterSettings('betterfriends');
     this.unload();
   }
@@ -116,7 +118,7 @@ module.exports = class BetterFriends extends Plugin {
    * When no module is specified, the entire plugin will reload
    * @param {String} specific Pass a specific module name to reload only that module
    */
-  async reload (...specific) {
+  async reload(...specific) {
     if (specific && specific.length) {
       for (const mod of specific) {
         this.log(`Reloading module '${mod}'`);
@@ -135,7 +137,7 @@ module.exports = class BetterFriends extends Plugin {
    * Overwrites the normal Powercord .log method.
    * @param {any} data Data to log
    */
-  log (data) {
+  log(data) {
     console.log('%c[ Better Friends ]', 'color: #ffeb3b', data);
   }
 };

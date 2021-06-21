@@ -2,7 +2,7 @@
   "name": "Better Friends",
   "version": "3.5.1",
   "description": "Improves Discord's friend feature in a multitude of ways -- XenoLib Notifs",
-  "author": "Nevulo, NEvana0003",
+  "author": "Nevulo, NEvana0003, slowstab",
   "license": "Apache-2.0",
   "optionalDependencies": [
     "pc-spotify",
