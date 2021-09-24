@@ -1,4 +1,8 @@
-const { React, getModule } = require('powercord/webpack');
+const {
+	React,
+	getModule,
+	constants: { Routes },
+} = require('powercord/webpack');
 const { Confirm } = require('powercord/components/modal');
 const { close: closeModal } = require('powercord/modal');
 
@@ -70,7 +74,7 @@ module.exports = class InformationModal extends React.Component {
 										<span
 											className='wrapperHover-1GktnT wrapper-3WhCwL clickable-1rK_Yk'
 											onClick={() => {
-												transitionTo(channel.id);
+												transitionTo(Routes.CHANNEL(guild.id, channel.id));
 												closeModal();
 											}}
 										>

@@ -27,8 +27,6 @@ module.exports = async function () {
 	const transition = await getModule(['transitionTo']);
 	const userStore = await getModule(['getUser', 'getCurrentUser']);
 	const channelStore = await getModule(['getChannel', 'getDMFromUserId']);
-	const activityStore = await getModule(['getPrimaryActivity']);
-	const statusStore = await getModule(['getStatus']);
 	const classes = {
 		...(await getModule(['channel', 'closeButton'])),
 		...(await getModule(['avatar', 'muted', 'selected'])),
@@ -80,46 +78,6 @@ module.exports = async function () {
 		}
 		return res;
 	});
-
-	// Build connected component
-	const ConnectedPrivateChannel = Flux.connectStores(
-		[userStore, channelStore, activityStore, statusStore, powercord.api.settings.store],
-		({ userId, currentSelectedChannel }) => {
-			const channelId = channelStore.getDMFromUserId(userId);
-			const selected = currentSelectedChannel === channelId;
-			const user = userStore.getUser(userId) || {
-				id: '0',
-				username: '???',
-				isSystemUser: () => false,
-				getAvatarURL: () => null,
-				isSystemDM: () => false,
-			};
-
-			const channel = channelId
-				? channelStore.getChannel(channelId)
-				: {
-						id: '0',
-						type: 1,
-						isMultiUserDM: () => false,
-						isSystemUser: () => false,
-						isSystemDM: () => false,
-						recipients: [user.id],
-						toString: () => user.username,
-				  };
-
-			return {
-				user,
-				channel,
-				selected,
-				channelName: user.username,
-				isMobile: statusStore.isMobileOnline(userId),
-				status: statusStore.getStatus(userId),
-				activities: activityStore.getActivities(userId),
-				infoModal: powercord.api.settings.store.getSetting('betterfriends', 'infomodal'),
-				isBetterFriends: true,
-			};
-		}
-	)(PrivateChannel);
 
 	// Patch DM list
 	inject('bf-direct-messages', ConnectedPrivateChannelsList, 'default', (args, res) => {
