@@ -15,6 +15,10 @@ module.exports = ({
     offline: {
       friendly: 'offline',
       class: 'offline-3qoTek'
+    },
+    invisible: { // just if switch accounts
+      friendly: 'offline',
+      class: 'offline-3qoTek'
     }
   },
   InjectionIDs: {
