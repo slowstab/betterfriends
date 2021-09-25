@@ -34,7 +34,7 @@ module.exports = async function () {
         const isPremium = getModule([ 'isSpotifyPremium' ], false).isSpotifyPremium();
         if (!isPremium) return res;
 
-        const spotifyFriends = this.FAV_FRIENDS.filter(c => isListeningToSpotify(c));
+        const spotifyFriends = this.FAV_FRIENDS.filter(c => isListeningToSpotify(c.id));
         if (spotifyFriends.length && res.props.children[1] && res.props.children[1].props.children) {
           res.props.children[1].props.children.unshift(React.createElement(
             MenuItem,
