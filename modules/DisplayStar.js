@@ -12,7 +12,7 @@ module.exports = async function () {
 		return;
 	}
 	const classes = await getModule(['topSection']);
-	const isFavoriteFriend = id => this.FAV_FRIENDS.includes(id);
+	const isFavoriteFriend = id => this.FAV_FRIENDS.some(f => f.id === id);
 
 	/**
 	 * Thanks to Bowser65 for some of the code provided below
