@@ -17,7 +17,7 @@ module.exports = async function () {
     const relationships = getRelationships();
     return Object.keys(relationships).filter(relation => relationships[relation] === 1).includes(id);
   };
-  const isFavoriteFriend = (id) => this.FAV_FRIENDS.includes(id);
+  const isFavoriteFriend = (id) => this.FAV_FRIENDS.some(friend => friend.id === id);
   for (const module of InjectionIDs.ContextMenu.map(id => id.replace('bf-', ''))) {
     const m = await getModule(m => m.default && m.default.displayName === module);
     inject(`bf-${module}`, m, 'default', (args, res) => {
@@ -31,7 +31,7 @@ module.exports = async function () {
               id: 'bf-add',
               label: 'Add as Favorite',
               action: () => {
-                this.FAV_FRIENDS.push(id);
+                this.FAV_FRIENDS.push({id, since: Date.now()});
                 this.settings.set('favfriends', this.FAV_FRIENDS);
                 this.reload();
               }
@@ -43,7 +43,7 @@ module.exports = async function () {
               id: 'bf-remove',
               label: 'Remove from Favorites',
               action: () => {
-                this.FAV_FRIENDS = this.FAV_FRIENDS.filter(a => a !== id);
+                this.FAV_FRIENDS = this.FAV_FRIENDS.filter(a => a.id !== id);
                 this.settings.set('favfriends', this.FAV_FRIENDS);
                 this.reload();
               }

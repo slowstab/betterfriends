@@ -71,15 +71,15 @@ module.exports = class Settings extends React.Component {
 									className='bf-friend-item'
 									id={user.id}
 									key={i.toString()}
-									selected={this.state.favfriends.includes(user.id)}
+									selected={this.state.favfriends.some(f => f.id === user.id)}
 									onClick={e => {
 										if (!e.selected) {
-											this.state.favfriends.push(e.id);
+											this.state.favfriends.push({ id: e.id, since: Date.now() });
 											this._set('favfriends', this.state.favfriends);
 										} else {
 											this._set(
 												'favfriends',
-												this.state.favfriends.filter(a => a !== e.id)
+												this.state.favfriends.filter(a => a.id !== e.id)
 											);
 										}
 										this.plugin.reload();

@@ -91,6 +91,12 @@ module.exports = class InformationModal extends React.Component {
 							</div>
 						);
 					})()}
+					<p className='text-2F8PnX colorStandard-2KCXvj marginBottom20-32qID7 primary-jw0I4K'>
+						Favorite friend since {new Date(this.props.friend.since).toLocaleDateString()} {new Date(this.props.friend.since).toLocaleTimeString()}
+					</p>
+					<p className='text-2F8PnX colorStandard-2KCXvj marginBottom20-32qID7 primary-jw0I4K'>
+						Joined discord on {user.createdAt.toLocaleDateString()} {user.createdAt.toLocaleTimeString()}
+					</p>
 				</div>
 			</Confirm>
 		);
