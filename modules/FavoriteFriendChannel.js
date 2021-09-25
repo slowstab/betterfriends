@@ -27,6 +27,11 @@ module.exports = async function () {
 	const transition = await getModule(['transitionTo']);
 	const userStore = await getModule(['getUser', 'getCurrentUser']);
 	const channelStore = await getModule(['getChannel', 'getDMFromUserId']);
+	const ListSectionItem = await getModuleByDisplayName('ListSectionItem');
+	const { lastMessageId } = await getModule(['lastMessageId']);
+	const { getDMFromUserId } = await getModule(['getDMFromUserId']);
+	const { getChannel } = await getModule(['getChannel']);
+	const { DirectMessage } = await getModule(['DirectMessage']);
 	const classes = {
 		...(await getModule(['channel', 'closeButton'])),
 		...(await getModule(['avatar', 'muted', 'selected'])),
@@ -86,19 +91,32 @@ module.exports = async function () {
 			return channel.type !== 1 || !this.FAV_FRIENDS.includes(channel.recipients[0]);
 		});
 
+		if (res.props.children.find(x => x?.toString()?.includes('Favorite Friends'))) return res;
 		if (this.favFriendsInstance) this.favFriendsInstance.forceUpdate();
-		res.props.children = [
-			// Previous elements
-			...res.props.children,
-			// Favorite Friends
-			() =>
-				React.createElement(FavoriteFriends, {
-					classes,
-					FAV_FRIENDS: this.FAV_FRIENDS,
-					selectedChannelId: res.props.selectedChannelId,
-					_this,
-				}),
-		];
+		res.props.children.push(
+			() => {
+				if (document.querySelector('.content-3YMskv')?.children[0].style.height !== '8px') return null;
+				return React.createElement(
+					ListSectionItem,
+					{ className: classes.privateChannelsHeaderContainer },
+					React.createElement('span', { className: classes.headerText }, 'Favorite Friends')
+				);
+			},
+			() => {
+				if (document.querySelector('.content-3YMskv')?.children[0].style.height !== '8px') return null;
+				return this.FAV_FRIENDS.sort((a, b) => lastMessageId(getDMFromUserId(b)) - lastMessageId(getDMFromUserId(a))).map(
+					userId =>
+						getChannel(getDMFromUserId(userId)) &&
+						React.createElement(DirectMessage, {
+							'aria-posinset': 7,
+							'aria-setsize': 54,
+							tabIndex: -1,
+							channel: getChannel(getDMFromUserId(userId)),
+							selected: res.props.selectedChannelId === getDMFromUserId(userId),
+						})
+				);
+			}
+		);
 
 		return res;
 	});
