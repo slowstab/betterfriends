@@ -2,20 +2,23 @@ const {
 	React,
 	i18n: { Messages },
 	getModule,
+	getModuleByDisplayName,
 } = require('powercord/webpack');
 const { Flex, Icon } = require('powercord/components');
 
 module.exports = ({ title, _this }) => {
 	const [sortKey, setSortKey] = React.useState(_this.sortKey);
 	const [sortReversed, setSortReversed] = React.useState(_this.sortReversed);
+	const [query, setQuery] = React.useState(_this.searchQuery);
 	const headers = getModule(['headerCell'], false);
+	const SearchBar = getModuleByDisplayName('SearchBar', false);
 	const updateList = () => {
 		document.querySelector('.peopleList-3c4jOR').dispatchEvent(new Event('focusin'));
 		setTimeout(() => document.querySelector('.peopleList-3c4jOR').dispatchEvent(new Event('focusout')));
 	};
 
 	return (
-		<Flex align={Flex.Align.CENTER} justify={Flex.Justify.CENTER}>
+		<Flex align={Flex.Align.CENTER}>
 			<div className={`bf-header bf-nameCell ${headers.headerCell}`}>
 				<div className={headers.headerCellContent}>{title}</div>
 			</div>
@@ -53,6 +56,19 @@ module.exports = ({ title, _this }) => {
 					</div>
 				</div>
 			))}
+			<SearchBar
+				query={query}
+				placeholder='name'
+				onChange={c => {
+					setQuery(c);
+					_this.searchQuery = c;
+					setTimeout(() => updateList(), 100);
+				}}
+				onClear={() => {
+					setQuery('');
+					_this.searchQuery = '';
+				}}
+			/>
 		</Flex>
 	);
 };

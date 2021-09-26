@@ -12,6 +12,7 @@ const FriendListTitle = require('../components/FriendListTitle');
 module.exports = async function () {
 	this.sortKey = '';
 	this.sortReversed = false;
+	this.searchQuery = '';
 
 	const _injectTabBar = async () => {
 		const TabBar = (await getModuleByDisplayName('TabBar')).prototype;
@@ -133,6 +134,7 @@ module.exports = async function () {
 							return xValue < yValue ? -1 : xValue > yValue ? 1 : 0;
 						});
 					}
+					if (this.searchQuery) section = section.filter(u => u.props.usernameLower.includes(this.searchQuery));
 					if (this.sortReversed) section.reverse();
 					return section;
 				});

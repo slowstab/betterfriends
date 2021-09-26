@@ -241,10 +241,8 @@ html body .bf-ff-header {
 }
 
 .bf-header {
-	border-left: 1px solid var(--background-modifier-accent);
-	border-right: 1px solid var(--background-modifier-accent);
+	border-left: 2px solid var(--background-modifier-accent);
 	box-sizing: border-box;
-	padding: 0 12px;
 }
 
 .headerCellContent-1pLtOr {
@@ -252,5 +250,30 @@ html body .bf-ff-header {
 }
 
 .bf-nameCell {
-	width: 130px;
+	width: min-content;
+	padding: 0px 30px;
+}
+
+@media screen and (max-width: 975px) {
+	.bf-nameCell {
+		padding: 0px 10px;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.bf-nameCell {
+		padding: 0px 10px;
+	}
+}
+
+@media screen and (min-width: 1400px) {
+	.bf-nameCell {
+		padding: 0px 30px;
+	}
+}
+
+@media screen and (min-width: 1500px) {
+	.bf-nameCell {
+		padding: 0px 40px;
+	}
 }
