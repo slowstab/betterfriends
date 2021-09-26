@@ -4,13 +4,7 @@ const {
 	Icons: { Keyboard },
 	Tooltip,
 } = require('powercord/components');
-const {
-	React,
-	Flux,
-	getModuleByDisplayName,
-	getModule,
-	constants: { Routes },
-} = require('powercord/webpack');
+const { React, getModuleByDisplayName, getModule } = require('powercord/webpack');
 
 const FavoriteFriends = require("../components/FavoriteFriends");
 const InformationModal = require("../components/InformationModal");

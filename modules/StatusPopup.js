@@ -1,7 +1,6 @@
 /*eslint-disable*/
 const { inject } = require('powercord/injector');
 const { React, getModule } = require('powercord/webpack');
-const { waitFor, getOwnerInstance } = require('powercord/util');
 const { StatusHandler } = require('./../components');
 const { XenoLib } = global;
 
@@ -75,8 +74,8 @@ module.exports = async function () {
         this.createFriendPopup(res, status);
       }
 
-      this.FRIEND_DATA.statusStorage[res.id] = status;
-    }
-    return res;
-  });
+			this.FRIEND_DATA.statusStorage[res.id] = status;
+		}
+		return res;
+	});
 };

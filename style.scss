@@ -210,3 +210,47 @@ html body .bf-ff-header {
 .pc-scroller {
 	max-height: 300px;
 }
+
+.bf-container {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-transform: uppercase;
+	font-size: 12px;
+	line-height: 16px;
+	font-weight: 600;
+	-webkit-box-flex: 1;
+	-ms-flex: 1 1 auto;
+	flex: 1 1 auto;
+	color: var(--channels-default);
+}
+
+.bf-mutualGuilds {
+	display: flex;
+	flex-direction: row-reverse;
+	margin-right: 15px;
+	margin-bottom: 10px;
+	position: inherit;
+	.icon-3o6xvg {
+		border-radius: 12px;
+	}
+	> div {
+		margin-right: -5px;
+	}
+}
+
+.bf-header {
+	border-left: 1px solid var(--background-modifier-accent);
+	border-right: 1px solid var(--background-modifier-accent);
+	box-sizing: border-box;
+	padding: 0 12px;
+}
+
+.headerCellContent-1pLtOr {
+	margin: auto;
+}
+
+.bf-nameCell {
+	width: 130px;
+}

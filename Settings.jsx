@@ -17,6 +17,9 @@ module.exports = class Settings extends React.Component {
 			infomodal: get('infomodal', true),
 			displaystar: get('displaystar', true),
 			statuspopup: get('statuspopup', true),
+			sortoptions: get('sortoptions', true),
+			mutualguilds: get('mutualguilds', true),
+			showtotal: get('showtotal', true),
 		};
 	}
 
@@ -150,6 +153,50 @@ module.exports = class Settings extends React.Component {
 					}}
 				>
 					Show status notifications
+				</SwitchItem>
+
+				<SwitchItem
+					note='Have sort options in the friend list'
+					value={this.state.sortoptions}
+					onChange={() => {
+						this._set('sortoptions');
+						this.plugin.reload();
+					}}
+				>
+					Show sort options
+				</SwitchItem>
+
+				<SwitchItem
+					note='Show mutual guilds in the friend list'
+					value={this.state.mutualguilds}
+					onChange={() => {
+						this._set('mutualguilds');
+						this.plugin.reload();
+					}}
+				>
+					Show mutual guilds
+				</SwitchItem>
+
+				<SwitchItem
+					note='Show mutual guilds in the friend list'
+					value={this.state.mutualguilds}
+					onChange={() => {
+						this._set('mutualguilds');
+						this.plugin.reload();
+					}}
+				>
+					Show mutual guilds
+				</SwitchItem>
+
+				<SwitchItem
+					note='Show total amount for all/requested/blocked'
+					value={this.state.showtotal}
+					onChange={() => {
+						this._set('showtotal');
+						this.plugin.reload();
+					}}
+				>
+					Show total amount for all/requested/blocked
 				</SwitchItem>
 
 				<h5 className='h5-18_1nd title-3sZWYQ size12-3R0845 height16-2Lv3qA weightSemiBold-NJexzi marginBottom8-AtZOdT marginTop40-i-78cZ'>
